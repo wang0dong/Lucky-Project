@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<robot name="cube">
+  <link name="cube_link">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 0.5"/>  <!-- Small cube: 0.5m per side -->
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>  <!-- Red color -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.5 0.5 0.5"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

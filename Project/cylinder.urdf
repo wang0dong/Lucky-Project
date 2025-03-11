@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<robot name="cylinder">
+  <link name="cylinder_link">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.5" radius="0.25"/>  <!-- Cylinder: Height 0.5m, Radius 0.25m -->
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>  <!-- Blue color -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.5" radius="0.25"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

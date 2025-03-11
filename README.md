@@ -11,3 +11,9 @@ This project focuses on training a robot to navigate in a 2D environment using r
 - **Robot Navigation:** The robot learns how to move forward, turn left, and turn right in a simulated 2D environment.
 - **Obstacle Avoidance:** The robot is penalized when it collides with walls or obstacles.
 - **Goal-Oriented Training:** The robot receives a large reward when it reaches the goal.
+
+## View the results:
+
+You can watch the robot's training progress in the GIF below:
+
+![Robot Training GIF](Project/robottraining.gif)

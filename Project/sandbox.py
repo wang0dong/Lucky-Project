@@ -7,18 +7,10 @@ import pybullet as p
 import pybullet_data
 import time
 from stable_baselines3 import PPO
-from stable_baselines3.common.vec_env import DummyVecEnv
-from stable_baselines3.common.vec_env import SubprocVecEnv
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
 import os
-import random
-
-GREEN = '\033[92m'
-ORANGE = '\033[38;5;208m'
-RED = '\033[91m'
-RESET = '\033[0m'
 
 class RobotNavEnv(gym.Env):
     """
@@ -31,17 +23,9 @@ class RobotNavEnv(gym.Env):
         Args:
             render_mode (bool): If True, runs PyBullet in GUI mode; otherwise, runs in headless mode.
         """        
-        # self.total_reward = 0  # Cumulative reward for the episode
-        # self.step_count = 0    # Number of steps taken in the episode
         self.max_steps = 3000  # Maximum step limit per episode
         self.num_envs = 1      # Number of parallel environments (default: 1)
         self.render_mode = render_mode
-        # self.reward = 0.0  # Initialize step reward
-        # self.done = False  # Episode not finished initially
-        # self.truncated = False  # Flag for truncation        
-        # self.rewards = []  # List to track rewards for the episode
-        # self.dones = []  # List to track done flags
-        # self.obs_list = []  # List for storing observations
         self.step_count = 0  # Counter to track steps taken in the episode
 
         # Initialize other necessary components (robot, environment, target, etc.)
@@ -110,10 +94,6 @@ class RobotNavEnv(gym.Env):
         truncated = False  
         return reward, done, truncated 
 
-        # # Reset other necessary variables like robot state or position, if needed
-        # self.step_count = 0  # Reset step counter for the episode
-        # self.total_reward = 0.0  # Reset total reward for the episode
-
     def step(self, action):
         """
         Takes a step in the environment by applying the given actions and calculating rewards, done flags, and observations.
@@ -129,10 +109,6 @@ class RobotNavEnv(gym.Env):
         reward = 0 # reset the reword when take action
         done = False
         truncated = False
-
-        # # If starting a new episode, reset episode-specific variables
-        # if self.done:  # If done, start a new episode
-        #     self.reset_episode()
 
         # record the position prior the action
         prev_pos, _ = p.getBasePositionAndOrientation(self.robot)
@@ -191,12 +167,6 @@ class RobotNavEnv(gym.Env):
             # self.rewards.append(self.reward)
             # self.dones.append(self.done)
 
-        # # Ensure proper shapes for the output
-        # rewards = np.array(self.rewards).squeeze() # Fix Reward Shape (1,)
-        # obs_list = np.array(self.obs_list).squeeze() # Fix Observation Shape (3,)
-        # dones = np.array(self.dones).squeeze() # Fix Done Shape (1,)
-        # truncated = False
-        
         # Debug
         # print("Observation shape:", np.shape(obs_list))
         # print("Reward shape:", np.shape(rewards))
@@ -550,7 +520,6 @@ def train():
     env = RobotNavEnv(render_mode=True)  # Disable rendering for training
     model = PPO("MlpPolicy", env, policy_kwargs={"net_arch": [256, 256]}, verbose=1, batch_size=1024, n_steps=1024, ent_coef=0.01) # PPO model setup
 
-
     log_interval = 4096  # Print metrics every 4096 timesteps
     total_timesteps = 100000
 
@@ -699,13 +668,13 @@ def main():
     # show_world()
 
     # Uncomment to train the model (optional)
-    # train()
+    train()
 
     # Define the model checkpoint to be loaded for testing    
     model = "robot_nav_ppo_final"
  
     # Uncomment to test the model in the environment
-    test(model)
+    # test(model)
 
 if __name__ == "__main__":
     main()
